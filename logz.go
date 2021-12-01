@@ -13,12 +13,12 @@ import (
 ////	 mSugar *zap.SugaredLogger
 ////)
 
-type LogZ struct {
+type logz struct {
 	mLogger *zap.Logger
 	mSugar  *zap.SugaredLogger
 }
 
-func InitCore(logPath string) *LogZ {
+func InitCore(logPath string) *logz {
 
 	// 日志级别
 	logLevel := "DEBUG"
@@ -88,7 +88,7 @@ func InitCore(logPath string) *LogZ {
 	fLogger.Info("logger construction succeeded")
 	fSugar.Info("mSugar logger construction succeeded")
 
-	logZ := &LogZ{
+	logZ := &logz{
 		mLogger: fLogger,
 		mSugar:  fSugar,
 	}
@@ -96,7 +96,7 @@ func InitCore(logPath string) *LogZ {
 
 }
 
-func Init(logPath string) *LogZ {
+func Init(logPath string) *logz {
 	cmdPath, _ := os.Getwd()
 	rawJSON := []byte(`{
 	  "level": "debug",
@@ -126,7 +126,7 @@ func Init(logPath string) *LogZ {
 	fLogger.Info("logger construction succeeded")
 	fSugar.Info("mSugar logger construction succeeded")
 
-	logZ := &LogZ{
+	logZ := &logz{
 		mLogger: fLogger,
 		mSugar:  fSugar,
 	}
@@ -135,6 +135,6 @@ func Init(logPath string) *LogZ {
 }
 
 //"Failed to fetch URL: %s", url
-func (log LogZ) SugarInfoF(template string, args ...interface{}) {
+func (log logz) SugarInfoF(template string, args ...interface{}) {
 	log.mSugar.Infof(template, args)
 }
