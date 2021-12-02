@@ -8,10 +8,6 @@ import (
 	"os"
 )
 
-//var (
-////	 mLogger *zap.Logger
-////	 mSugar *zap.SugaredLogger
-////)
 
 type logz struct {
 	mLogger *zap.Logger
@@ -137,4 +133,8 @@ func Init(logPath string) *logz {
 //"Failed to fetch URL: %s", url
 func (log logz) SugarInfoF(template string, args ...interface{}) {
 	log.mSugar.Infof(template, args)
+}
+
+func (log logz) SugarInfo(str string) {
+	log.mSugar.Info(str)
 }
