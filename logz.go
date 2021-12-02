@@ -6,12 +6,35 @@ import (
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
+	"sync"
+	"time"
 )
-
 
 type logz struct {
 	mLogger *zap.Logger
 	mSugar  *zap.SugaredLogger
+}
+
+// 懒汉
+//var insl *logz
+
+// 饿汉
+//var ins *logz = &logz{}
+
+// 双重锁
+var ins *logz
+var mu sync.Mutex
+
+func GetIns() *logz {
+
+	if ins == nil {
+		mu.Lock()
+		defer mu.Unlock()
+		if ins == nil {
+			ins=InitCore(time.Now().Format("2006_0102_1504_05"))
+		}
+	}
+	return ins
 }
 
 func InitCore(logPath string) *logz {
